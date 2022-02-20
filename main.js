@@ -5,6 +5,10 @@ const CD = $('.thumb-cd')
 
 const heading = $('.audio-heading')
 const thumbCd = $('.thumb-cd__img')
+const audioOptionBtn = $('.audio-wrap__option')
+const audioOption = $('.audio-wrap__option-list')
+const volumeLine = $('.volume-input')
+const fixedThumb = $('.audio-wrap__option-fix-thum')
 const runSongBtn = $('.control__run')
 const audio = $('#audio')
 const lineProgress = $('.line-progress__input')
@@ -23,6 +27,7 @@ const app = {
     isSeeking: false,
     isRandom: false,
     isRepeat: false,
+    isFixedThumb: false,
     config: JSON.parse(localStorage.getItem(PLAYER_STORAGE)) || {},
     setConfig: function (key, value) {
         this.config[key] = value
@@ -98,13 +103,11 @@ const app = {
         })
     },
     loadConfig: function () {
-        this.isRandom = this.config.isRandom
-        this.isRepeat = this.config.isRepeat
+        this.isRandom = this.config.isRandom 
+        this.isRepeat = this.config.isRepeat 
         this.currentIndex = this.config.currentIndex || 0
-    },
-    activeConfig: function () {
-        randomBtn.classList.toggle('active', this.isRandom)
-        repeatBtn.classList.toggle('active', this.isRepeat)
+        audio.volume = this.config.volume || 1
+        this.isFixedThumb = this.config.isFixedThumb
     },
     loadcurrentSong: function () {
         heading.innerText = `${this.currentSong.name}`
@@ -137,13 +140,15 @@ const app = {
             _this.setConfig('currentIndex', _this.currentIndex)
         }
         // Scrolling
+
         const cdWidth = $('.thumb-cd').offsetWidth;
         document.onscroll = function () {
-            const scrollTop = window.scrollY || document.documentElement.scrollTop
-            const newCdWidth = Math.floor((cdWidth - scrollTop))
-            CD.style.width = (newCdWidth > 0 ? newCdWidth : 0) + 'px'
-            CD.style.opacity =  (newCdWidth > 0 ? newCdWidth / cdWidth : 0)
-            
+            if(!_this.isFixedThumb) {
+                const scrollTop = window.scrollY || document.documentElement.scrollTop
+                const newCdWidth = Math.floor((cdWidth - scrollTop))
+                CD.style.width = (newCdWidth > 0 ? newCdWidth : 0) + 'px'
+                CD.style.opacity =  (newCdWidth > 0 ? newCdWidth / cdWidth : 0)
+            }
         }
         // Around CD Thumb
         const cdThumbAnimate = thumbCd.animate([
@@ -286,6 +291,37 @@ const app = {
                 })
             }, 300)
         }
+        // Audio option
+        audioOptionBtn.onclick = function () {
+            if(!this.classList.contains('active')) {
+                this.classList.add('active')
+                audioOption.style.display = 'block'
+            } else {
+                this.classList.remove('active')
+                audioOption.style.display = 'none'
+            }
+
+        }
+        audioOption.onclick = function (e) {
+            e.stopPropagation()
+        }
+        // Audio volume
+        volumeLine.onchange = function () {
+            audio.volume = parseInt(this.value) / 100
+            _this.setConfig('volume', audio.volume)
+        }
+        // Fixed ThumCD
+        fixedThumb.onclick = function () {
+            _this.isFixedThumb = !_this.isFixedThumb
+            _this.setConfig('isFixedThumb', _this.isFixedThumb)
+            fixedThumb.classList.toggle('ticked', _this.isFixedThumb)
+        }
+    },
+    activeConfig: function () {
+        randomBtn.classList.toggle('active', this.isRandom)
+        repeatBtn.classList.toggle('active', this.isRepeat)
+        fixedThumb.classList.toggle('ticked', this.isFixedThumb)
+        volumeLine.value = audio.volume * 100
     },
     renderSong: function () {
         const htmls = this.songs.map(function(song, index) {

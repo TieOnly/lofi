@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./asset/css/resetCss.css">
+    <link rel="stylesheet" href="./asset/css/responsive.css">
+    <link rel="stylesheet" href="./asset/css/style.css">
+    <title>Lofi</title>
+</head>
+<body>
+    <div class="app">
+        <div class="audio-wrap">
+            <div class="heading">
+                <span>Now playing</span>
+                <h1 class="audio-heading">
+                    Song Name
+                </h1>
+            </div>
+            
+            <div class="thumb-cd">
+                <div class="thumb-cd__img" 
+                style="background-image: url('./asset/thumbSong/goodbyeaworld.jpg');"></div>
+            </div>
+    
+            <div class="control">
+                <div class="control__repeat">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </div>
+                <div class="control__back">
+                    <i class="fa-solid fa-backward-step"></i>
+                </div>
+                <div class="control__run pause">
+                    <div class="control__run-play">
+                        <i class="fa-solid fa-circle-play"></i>
+                    </div>
+                    <div class="control__run-pause">
+                        <i class="fa-solid fa-circle-pause"></i>
+                    </div>
+                </div>
+                <div class="control__next">
+                    <i class="fa-solid fa-forward-step"></i>
+                </div>
+                <div class="control__random">
+                    <i class="fa-solid fa-shuffle"></i>
+                </div>
+            </div>
+            <div class="line-progress">
+                <input type="range" class="line-progress__input" value="0" min="0" max="100" step="0.001">
+            </div>
+            <audio id="audio" src=""></audio>
+        </div>
+
+        <div class="play-list">
+            <ul class="play-list__wrap">
+                <li class="play-list__item">
+                    <div class="play-list__item-img">
+                        <div
+                            style="background-image: url('./asset/thumbSong/atmyworst.jpg');">
+                        </div>
+                    </div>
+                    <div class="play-list__item-info">
+                        <h3 class="play-list__item-info-head">
+                            Song Name
+                        </h3>
+                        <p class="play-list__item-info-author">
+                            Author
+                        </p>
+                    </div>
+                    <div class="play-list__item-option">
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="./main.js"></script>
+</body>
+</html>

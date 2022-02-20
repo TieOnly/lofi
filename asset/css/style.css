@@ -31,7 +31,6 @@ body {
     width: 100%;
     background-color: #fff;
     position: fixed;
-    position: relative;
     z-index: 1;
     max-height: var(--app-wrap-height);
 }

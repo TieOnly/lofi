@@ -1,5 +1,5 @@
-@media (max-width: 1023px) {
+@media (min-width: 740px) {
     .app, .audio-wrap {
-        width: 100%;
+        max-width: 500px;
     }
 }
